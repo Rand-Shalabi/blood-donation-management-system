@@ -10,3 +10,39 @@ header, body {
     padding: 0%;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
+.profile-container {
+    background-image: url("../assets/profile_background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.profile-card {
+  min-height: auto;
+  max-width: 1200px;
+  margin: auto;
+}
+
+img.profile {
+    min-height: 10vh;
+    width: 25%;
+    margin: 2%;
+    border-radius: 20px;
+}
+
+.profile-info {
+    border: solid grey 2px;
+    background-color: rgb(255, 255, 255, 20%);
+    border-radius: 10px;
+    margin: 5px 0 5px 0;
+}
+
+.profile-info:hover{
+    background-color: rgb(255, 255, 255, 70%);
+    border-color: black;
+    color: crimson;
+    transform: scale(1.01);
+}
