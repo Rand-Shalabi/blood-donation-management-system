@@ -63,7 +63,7 @@ include "includes/header.php";
                     <input type="file" name="donor_photo" class="form-control" required>
                 </div>
 
-                <input type="submit" class="btn btn-danger">Add Donor</input>
+                <input type="submit" class="btn btn-danger" value="Add Donor">
 
             </form>
         </div>
