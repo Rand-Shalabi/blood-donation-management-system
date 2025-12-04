@@ -28,6 +28,10 @@
                     <h5>Medical Information</h5>
                     <small class="text-muted">Blood Type</small>
                     <div>O+</div>
+                    <small class="text-muted">Last Donation</small>
+                    <div>2025-04-22</div>
+                    <small class="text-muted">Donations</small>
+                    <div>4</div>
                     <small class="text-muted">Gender</small>
                     <div>male</div>
                 </div>
