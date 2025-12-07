@@ -1,5 +1,5 @@
 <?php 
-$title = "Dellete Donor";
+$title = "change password";
 include "includes/header.php";
  
 ?>
