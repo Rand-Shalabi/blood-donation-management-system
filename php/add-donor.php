@@ -8,7 +8,7 @@ include "includes/header.php";
     </header>
     <?php include "sidepar.php"; ?>
 <div class="content">
-    <div class="container ">
+    <div class="container-add ">
         <h2>Add New Donor</h2>
      <div class="c card shadow p-5  ">
             <form action="add_donor_action.php" method="POST" >
@@ -24,6 +24,7 @@ include "includes/header.php";
                         <input type="email" name="email" class="form-control" required>
                     </div>
                 </div>
+
 
                 <div class="row mb-4">
                     <div class="col-md-4">
@@ -55,6 +56,21 @@ include "includes/header.php";
                              
                         </select>
                     </div>
+
+
+                    
+                    <div class="row mt-4">
+
+                   <div class="col-md-6">
+                      <label class="form-label">Last Donation Date</label>
+                  <input type="date" name="last_donation_date" class="form-control">
+                       </div>
+
+                <div class="col-md-6">
+        <label class="form-label">Total Donations</label>
+        <input type="number" name="donations" class="form-control" placeholder="Enter number of donations">
+    </div>
+</div>
                      
                 </div>
 
