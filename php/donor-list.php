@@ -1,6 +1,42 @@
 <?php
 $title = "Donor List";
 include "includes/header.php";
+include "includes/connection.php";
+    
+    $sql = "SELECT donor_id, photo, full_name,
+                   blood_type, gender, phone, 
+                   email, last_donation, donations
+            FROM user
+            RIGHT JOIN donor
+            ON user.id = donor.donor_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if(isset($_GET['action']) && $_GET['action'] == 'record' && isset($_GET['donor_id'])){
+        $donor_id = $_GET['donor_id'];
+        $date = date('Y-m-d');
+        $sql = "SELECT last_donation
+                FROM donor
+                WHERE donor_id = '$donor_id'";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $last_donation = $row['last_donation'];
+        if($last_donation == null || (strtotime($date) - strtotime($last_donation))/ (60 * 60 * 24) >= 56){
+            $sql = "UPDATE donor
+                    SET last_donation = '$date',
+                        donations = donations + 1
+                    WHERE donor_id = '$donor_id'";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            header("Location: donor-list.php?msg=Donation recorded");
+        }
+        else{
+            header("Location: donor-list.php?error=Too soon to donate again");
+        }
+    }
 ?>
 <body>
     <header>
@@ -27,66 +63,26 @@ include "includes/header.php";
                             <th>Email</th>
                             <th>Last Donation</th>
                             <th>Total Donations</th>
-                            
+                            <th>New Donation</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <!-- Donor 1 dummy data -->
-                        <tr>
-                            <td>1</td>
-                            <td><img src="../assets/user.png" class="rounded-circle" width="50"></td>
-                            <td>Ahmed Ali</td>
-                            <td>A+</td>
-                            <td>male</td>
-                             
-                            <td>0790000000</td>
-                            <td>ahmed@example.com</td>
-                            <td>2023-12-10</td>  
-                            <td>5</td> 
-                        </tr>
-
-                        <!-- Donor 2 dummy data -->
-                        <tr>
-                         <td>2</td>
-                            <td><img src="../assets/user.png" class="rounded-circle" width="50"></td>
-                            <td>Sara Khaled</td>
-                            <td>O-</td>
-                            <td>Female</td>
-                            <td>0781234567</td>
-                            <td>sara@example.com</td>
-                            <td>2023-12-10</td>  
-                            <td>5</td> 
-                        </tr>
-
-                        <!-- Donor 3 dummy data -->
-                        <tr>
-                            <td>3</td>
-                            <td><img src="../assets/user.png" class="rounded-circle" width="50"></td>
-                            <td>Mohammad Yaser</td>
-                            <td>B+</td>
-                            <td>male</td>
-                            <td>0773334444</td>
-                            <td>mohammad@example.com</td>
-                            <td>2023-12-10</td>  
-                            <td>3</td> 
-                        </tr>
-<tr>
-                            <td>4</td>
-                            <td><img src="../assets/user.png" class="rounded-circle" width="50"></td>
-                            <td>Mohammad Yaser</td>
-                            <td>B+</td>
-                            <td>male</td>
-                            <td>0773334444</td>
-                            <td>mohammad@example.com</td>
-                            <td>2023-12-10</td>  
-                            <td>1</td> 
-                        </tr>
+                        <?php while($row = $result->fetch_assoc()){ $i = 0;?>
+                            <tr>
+                            <?php foreach($row as $key=>$value){ 
+                                if($i == 1){ ?>
+                                    <td><img src="../uploads/<?= $value ?>" alt="donor photo" class="list-img"></td>
+                                <?php } else{ ?>
+                                    <td><?= $value ?></td>
+                            <?php } $i++;} ?>
+                            <td><a href="donor-list.php?action=record&donor_id=<?= $row['donor_id'] ?>" 
+                                   class="btn btn-success btn-sm">Record Donation</a></td>
+                            </tr>
+                        <?php }?>
                     </tbody>
                 </table>
             </div>
-        
-
     </div>
 </div>
 </body>
