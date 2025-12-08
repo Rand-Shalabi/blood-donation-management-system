@@ -11,11 +11,10 @@ h1.header {
     z-index: 2000;  
 }
 
-header, body {
+body {
     margin: 0%;
     padding: 0%;
-     padding-top: 20px;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 /* Sidebar */
