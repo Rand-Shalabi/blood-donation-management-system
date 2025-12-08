@@ -1,5 +1,5 @@
  <?php 
-$title = "udate password";
+$title = "update password";
 include "includes/header.php";
  
 ?>
