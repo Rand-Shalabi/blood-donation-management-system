@@ -15,17 +15,6 @@ include "includes/header.php";
 
     <h2>Update Donor Information</h2>
 
-    <!-- Search Donor ID -->
-    <div class="card p-4 mb-4 shadow">
-        <form method="GET">
-            <label class="form-label">Enter Donor ID</label>
-            <div class="d-flex gap-3">
-                <input type="number" name="id" class="form-control" placeholder="Example: 1" required>
-                  <input type="submit" name="search" value="Search" class=" btn   btn-danger ">
-            </div>
-        </form>
-    </div>
-
     <!-- Update Donor Form -->
     <div class="card shadow p-5">
 
