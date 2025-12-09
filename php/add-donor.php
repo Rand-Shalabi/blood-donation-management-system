@@ -1,10 +1,10 @@
 <?php 
-$title = "Add Donor";
+$title = "BDMS - Add Donor";
 include "includes/header.php";
 ?>
 <body>
     <header>
-        <h1 class="header"> Blood Bank & Donation - Admin Panel </h1>
+        <h1 class="header"><small> Blood Donation Management Dashboard </small></h1>
     </header>
     <?php include "sidepar.php"; ?>
 <div class="content">

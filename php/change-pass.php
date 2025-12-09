@@ -1,11 +1,11 @@
 <?php 
-$title = "change password";
+$title = "BDMS - Reset Password";
 include "includes/header.php";
  
 ?>
 <body>
     <header>
-        <h1 class="header"> Blood Bank & Donation - Admin Panel </h1>
+        <h1 class="header"><small> Blood Donation Management Dashboard </small></h1>
     </header>
     <?php include "sidepar.php"; ?>
     <div class="content">

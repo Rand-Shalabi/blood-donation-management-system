@@ -1,5 +1,5 @@
 <?php
-$title = "Donor List";
+$title = "BDMS - Donor List";
 include "includes/header.php";
 include "includes/connection.php";
     
@@ -40,7 +40,7 @@ include "includes/connection.php";
 ?>
 <body>
     <header>
-        <h1 class="header"> Blood Bank & Donation - Admin Panel </h1>
+        <h1 class="header"><small> Blood Donation Management Dashboard </small></h1>
     </header>
     <?php include "sidepar.php"; ?>
 
