@@ -75,18 +75,6 @@ include "includes/header.php";
                 </div>
             </div>
 
-            <div class="row mb-4">
-                <div class="col-md-6">
-                    <label class="form-label">Last Donation Date</label>
-                    <input type="date" name="last_donation" class="form-control" value="">
-                </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">Total Donations</label>
-                    <input type="number" name="total_donations" class="form-control" value="">
-                </div>
-            </div>
-
             <div class="mb-3">
                 <label class="form-label">Upload New Photo (optional)</label>
                 <input type="file" name="photo" class="form-control">

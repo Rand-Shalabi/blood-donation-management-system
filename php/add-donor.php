@@ -56,21 +56,6 @@ include "includes/header.php";
                              
                         </select>
                     </div>
-
-
-                    
-                    <div class="row mt-4">
-
-                   <div class="col-md-6">
-                      <label class="form-label">Last Donation Date</label>
-                  <input type="date" name="last_donation_date" class="form-control">
-                       </div>
-
-                <div class="col-md-6">
-        <label class="form-label">Total Donations</label>
-        <input type="number" name="donations" class="form-control" placeholder="Enter number of donations">
-    </div>
-</div>
                      
                 </div>
 
