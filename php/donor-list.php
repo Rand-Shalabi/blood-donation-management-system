@@ -80,13 +80,13 @@ include "includes/connection.php";
                                 <a href="donor-list.php?action=record&donor_id=<?= $row['donor_id'] ?>" 
                                    class="btn btn-success btn-sm action-btn">Donate</a>
                                 <br>
-                                <a href="edit-donor.php?action=update&$donor_id=<?= $row['donor_id'] ?>" 
+                                <a href="edit-donor.php?donor_id=<?= $row['donor_id'] ?>" 
                                    class="btn btn-primary btn-sm action-btn">Update</a>
                                 <br>
-                                <a href="change-pass.php?action=reset&donor_id=<?= $row['donor_id'] ?>" 
+                                <a href="change-pass.php?donor_id=<?= $row['donor_id'] ?>" 
                                    class="btn btn-warning btn-sm action-btn">Reset</a>
                                 <br>
-                                <a href="delete-donor.php?action=delete&donor_id=<?= $row['donor_id'] ?>" 
+                                <a href="delete-donor.php?donor_id=<?= $row['donor_id'] ?>" 
                                    class="btn btn-danger btn-sm action-btn">Delete</a>
                             </td>
                             </tr>
