@@ -8,6 +8,7 @@ include "includes/header.php";
         <h1 class="header"> Blood Bank & Donation - Admin Panel </h1>
     </header>
     <?php include "sidepar.php"; ?>
+    <div class="content">
      <div class="container-delete ">
     <h2>Delete Donor</h2>
 
@@ -18,7 +19,7 @@ include "includes/header.php";
         <input type="submit" name="delete" value="Delete Donor" class=" btn btn-delete btn-danger ">
     </form>
 </div>
-
+</div>
 </body>
 </html>
 

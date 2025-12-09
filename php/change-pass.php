@@ -8,7 +8,7 @@ include "includes/header.php";
         <h1 class="header"> Blood Bank & Donation - Admin Panel </h1>
     </header>
     <?php include "sidepar.php"; ?>
-    <div class="content-area">
+    <div class="content">
     <h2>Change Password</h2>
 
     <div class="password-box">
