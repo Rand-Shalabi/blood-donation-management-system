@@ -157,3 +157,12 @@ body {
 .save-btn:hover {
     background: #0056b3;
 }
+
+.list-img{
+    max-width: 50px;
+    max-height: 50px;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    border-radius: 30px;
+}
