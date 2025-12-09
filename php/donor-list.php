@@ -63,7 +63,7 @@ include "includes/connection.php";
                             <th>Email</th>
                             <th>Last Donation</th>
                             <th>Total Donations</th>
-                            <th>New Donation</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
 
@@ -76,8 +76,19 @@ include "includes/connection.php";
                                 <?php } else{ ?>
                                     <td><?= $value ?></td>
                             <?php } $i++;} ?>
-                            <td><a href="donor-list.php?action=record&donor_id=<?= $row['donor_id'] ?>" 
-                                   class="btn btn-success btn-sm">Record Donation</a></td>
+                            <td>
+                                <a href="donor-list.php?action=record&donor_id=<?= $row['donor_id'] ?>" 
+                                   class="btn btn-success btn-sm action-btn">Donate</a>
+                                <br>
+                                <a href="edit-donor.php?action=update&$donor_id=<?= $row['donor_id'] ?>" 
+                                   class="btn btn-primary btn-sm action-btn">Update</a>
+                                <br>
+                                <a href="change-pass.php?action=reset&donor_id=<?= $row['donor_id'] ?>" 
+                                   class="btn btn-warning btn-sm action-btn">Reset</a>
+                                <br>
+                                <a href="delete-donor.php?action=delete&donor_id=<?= $row['donor_id'] ?>" 
+                                   class="btn btn-danger btn-sm action-btn">Delete</a>
+                            </td>
                             </tr>
                         <?php }?>
                     </tbody>

@@ -149,3 +149,8 @@ body {
     object-fit: cover;
     border-radius: 30px;
 }
+
+.action-btn{
+    margin: 2px;
+    width: 70px;
+}
