@@ -1,7 +1,29 @@
  <?php 
 $title = "BDMS - Update Donor Info";
 include "includes/header.php";
- 
+include "includes/connection.php";
+    if(isset($_GET['donor_id'])){
+        $donor_id = (int)$_GET['donor_id'];
+        $sql = "SELECT donor.*, user.email
+                FROM donor
+                JOIN user
+                ON donor.donor_id = user.id 
+                WHERE donor.donor_id = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $donor_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if($row = $result->fetch_assoc()){
+            $name = $row['full_name'];
+            $email = $row['email'];
+            $photo = $row['photo'];
+            $phone = $row['phone'];
+            $blood_type = $row['blood_type'];
+            $gender = $row['gender'];
+        }
+    }
 ?>
 <body>
     <header>
@@ -28,12 +50,12 @@ include "includes/header.php";
             <div class="row mb-4">
                 <div class="col-md-6">
                     <label class="form-label">Full Name</label>
-                    <input type="text" name="fullname" class="form-control" value="">
+                    <input type="text" name="fullname" class="form-control" value="<?= isset($name)? $name: "" ?>">
                 </div>
 
                 <div class="col-md-6">
                     <label class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" value="">
+                    <input type="email" name="email" class="form-control" value="<?= isset($email)? $email: "" ?>">
                 </div>
             </div>
 
@@ -42,31 +64,35 @@ include "includes/header.php";
                     <label class="form-label">Blood Type</label>
                     <select name="blood_type" class="form-select">
                         <option>Select...</option>
-                        <option>A+</option><option>A-</option>
-                        <option>B+</option><option>B-</option>
-                        <option>O+</option><option>O-</option>
-                        <option>AB+</option><option>AB-</option>
+                        <option value="A+" <?= ($blood_type === 'A+') ? 'selected' : '' ?>>A+</option>
+                        <option value="A-" <?= ($blood_type === 'A-') ? 'selected' : '' ?>>A-</option>
+                        <option value="B+" <?= ($blood_type === 'B+') ? 'selected' : '' ?>>B+</option>
+                        <option value="B-" <?= ($blood_type === 'B-') ? 'selected' : '' ?>>B-</option>
+                        <option value="O+" <?= ($blood_type === 'O+') ? 'selected' : '' ?>>O+</option>
+                        <option value="O-" <?= ($blood_type === 'O-') ? 'selected' : '' ?>>O-</option>
+                        <option value="AB+" <?= ($blood_type === 'AB+') ? 'selected' : '' ?>>AB+</option>
+                        <option value="AB-" <?= ($blood_type === 'AB-') ? 'selected' : '' ?>>AB-</option>
                     </select>
                 </div>
 
                 <div class="col-md-4">
                     <label class="form-label">Phone</label>
-                    <input type="text" name="phone" class="form-control" value="">
+                    <input type="text" name="phone" class="form-control" value="<?= isset($phone)? $phone: "" ?>">
                 </div>
 
                 <div class="col-md-4">
                     <label class="form-label">Gender</label>
-                    <select name="gender" class="form-select">
+                    <select name="gender" class="form-select" value="<?= isset($gender)? $gender: "" ?>">
                         <option>Select...</option>
-                        <option>Male</option>
-                        <option>Female</option>
+                        <option value="male" <?= ($gender === 'male') ? 'selected' : '' ?>>Male</option>
+                        <option value="female" <?= ($gender === 'female') ? 'selected' : '' ?>>Female</option>
                     </select>
                 </div>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Upload New Photo (optional)</label>
-                <input type="file" name="photo" class="form-control">
+                <input type="file" name="photo" class="form-control" value="<?= isset($photo)? $photo: "" ?>">
             </div>
 
               <input type="submit" name="update" value="Save changes" class=" btn   btn-danger ">
