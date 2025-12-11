@@ -47,7 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 if ($stmt2->execute()) {
                     $success = "Account created successfully!";
-                    header("refresh:2;url=profile.php"); 
+                    if ($_POST['action'] === 'create_account') {
+                        header("refresh:2;url=profile.php");
+                    } else if ($_POST['action'] === 'add_donor') {
+                        header("refresh:2;url=donor-list.php");
+                    }
                 } else {
                     $error = "Error creating donor profile. Please try again.";
                 }
