@@ -3,3 +3,68 @@ body {
     padding: 0%;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
+.my-flex{
+    display: flex; 
+        flex-grow: 1; 
+        align-items: center;
+  
+}
+
+.main {
+    height: 100vh;        
+    display: flex;          
+    flex-direction: column; 
+}
+.my-title {
+    padding-top: 12.5px;
+    margin-bottom: 25px;
+     
+  
+}
+
+
+.par {
+    width: 500px;      
+    font-size: 15px; 
+    line-height: 1.5;   
+     
+  
+}
+
+
+
+.body1 {
+    position: relative;
+    background-image: url('../assets/Medion-Grifols-Diagnostics-01_web.jpg');  
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+     min-height: 100vh;
+      background-attachment: fixed;
+    
+    
+}
+  
+ 
+
+
+.contain {
+    position: relative;
+    z-index: 1; 
+}
+
+
+.header1{
+ display: flex; 
+  width:100%;
+  padding: 10px 5px;
+  color:#e0dddd  ;
+  gap: 10px;  
+
+}
+ .logo {
+    width: 50px;            
+    height: 50px;
+     z-index: 1; 
+}
