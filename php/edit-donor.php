@@ -24,6 +24,33 @@ include "includes/connection.php";
             $gender = $row['gender'];
         }
     }
+    if(isset($_POST['donor_id'])){
+        $donor_id = (int)$_POST['donor_id'];
+        $name = $_POST['fullname'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $blood_type = $_POST['blood_type'];
+        $gender = $_POST['gender'];
+
+        $conn->begin_transaction();
+        $sql1 = "UPDATE donor
+                 SET full_name = ?, blood_type = ?, phone = ?, gender = ?
+                 WHERE donor_id = ?";
+
+        $stmt1 = $conn->prepare($sql1);
+        $stmt1->bind_param("ssssi", $name, $blood_type, $phone, $gender, $donor_id);
+        $stmt1->execute();
+
+        $sql2 = "UPDATE user
+                 SET email = ?
+                 WHERE id = ?";
+
+        $stmt2 = $conn->prepare($sql2);
+        $stmt2->bind_param("si", $email, $donor_id);
+        $stmt2->execute();
+
+        $conn->commit();
+    }
 ?>
 <body>
     <header>
@@ -43,9 +70,9 @@ include "includes/connection.php";
         <h4>Editing Donor Information</h4>
         <hr>
 
-        <form method="POST" action="update_donor_action.php" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data">
 
-            <input type="hidden" name="id" value="">
+            <input type="hidden" name="donor_id" value="<?= isset($donor_id)? $donor_id: "" ?>">
 
             <div class="row mb-4">
                 <div class="col-md-6">
