@@ -2,6 +2,7 @@
 $title = "BDMS - Reset Password";
 include "includes/header.php";
 include "includes/connection.php";
+include "functions.php";
 
     if(isset($_GET['donor_id'])){
 
@@ -55,7 +56,14 @@ include "includes/connection.php";
     <h2>Change Password</h2>
 
     <div class="password-box">
-
+        <?php 
+            if(isset($error)){
+                echo show_alert($error);
+            } elseif(isset($success)){
+                header("refresh:2;url=donor-list.php");
+                echo show_alert($success, "success");
+            }
+        ?>
         <form method="POST" enctype="multipart/form-data">
 
             <label for="current">Current Password</label>
