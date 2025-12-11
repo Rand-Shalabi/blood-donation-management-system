@@ -1,7 +1,8 @@
- <?php 
+<?php 
 $title = "BDMS - Update Donor Info";
 include "includes/header.php";
 include "includes/connection.php";
+include "functions.php"
     if(isset($_GET['donor_id'])){
         $donor_id = (int)$_GET['donor_id'];
         $sql = "SELECT donor.*, user.email
@@ -26,30 +27,37 @@ include "includes/connection.php";
     }
     if(isset($_POST['donor_id'])){
         $donor_id = (int)$_POST['donor_id'];
-        $name = $_POST['fullname'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
+        $name = trim($_POST['fullname']);
+        $email = trim($_POST['email']);
+        $phone = trim($_POST['phone']);
         $blood_type = $_POST['blood_type'];
         $gender = $_POST['gender'];
 
-        $conn->begin_transaction();
-        $sql1 = "UPDATE donor
-                 SET full_name = ?, blood_type = ?, phone = ?, gender = ?
-                 WHERE donor_id = ?";
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $error = "Invalid email format.";
+        } elseif (!preg_match('/^[0-9]{9,15}$/', $phone)) {
+            $error = "Phone must be 9-15 digits.";
+        } else{
+            $conn->begin_transaction();
+            $sql1 = "UPDATE donor
+                     SET full_name = ?, blood_type = ?, phone = ?, gender = ?
+                     WHERE donor_id = ?";
 
-        $stmt1 = $conn->prepare($sql1);
-        $stmt1->bind_param("ssssi", $name, $blood_type, $phone, $gender, $donor_id);
-        $stmt1->execute();
+            $stmt1 = $conn->prepare($sql1);
+            $stmt1->bind_param("ssssi", $name, $blood_type, $phone, $gender, $donor_id);
+            $stmt1->execute();
 
-        $sql2 = "UPDATE user
-                 SET email = ?
-                 WHERE id = ?";
+            $sql2 = "UPDATE user
+                     SET email = ?
+                     WHERE id = ?";
 
-        $stmt2 = $conn->prepare($sql2);
-        $stmt2->bind_param("si", $email, $donor_id);
-        $stmt2->execute();
+            $stmt2 = $conn->prepare($sql2);
+            $stmt2->bind_param("si", $email, $donor_id);
+            $stmt2->execute();
 
-        $conn->commit();
+            $conn->commit();
+            $success = "Updated Successfully!";
+        }
     }
 ?>
 <body>
@@ -66,7 +74,14 @@ include "includes/connection.php";
 
     <!-- Update Donor Form -->
     <div class="card shadow p-5">
-
+        <?php 
+            if(isset($error)){
+                echo show_alert($error);
+            } elseif(isset($success)){
+                header("refresh:2;url=donor-list.php");
+                echo show_alert($success, "success");
+            }
+        ?>
         <h4>Editing Donor Information</h4>
         <hr>
 
@@ -77,20 +92,20 @@ include "includes/connection.php";
             <div class="row mb-4">
                 <div class="col-md-6">
                     <label class="form-label">Full Name</label>
-                    <input type="text" name="fullname" class="form-control" value="<?= isset($name)? $name: "" ?>">
+                    <input type="text" name="fullname" class="form-control" value="<?= isset($name)? $name: "" ?>" required>
                 </div>
 
                 <div class="col-md-6">
                     <label class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" value="<?= isset($email)? $email: "" ?>">
+                    <input type="email" name="email" class="form-control" value="<?= isset($email)? $email: "" ?>" required>
                 </div>
             </div>
 
             <div class="row mb-4">
                 <div class="col-md-4">
                     <label class="form-label">Blood Type</label>
-                    <select name="blood_type" class="form-select">
-                        <option>Select...</option>
+                    <select name="blood_type" class="form-select" required>
+                        <option value="" disabled selected>Select...</option>
                         <option value="A+" <?= ($blood_type === 'A+') ? 'selected' : '' ?>>A+</option>
                         <option value="A-" <?= ($blood_type === 'A-') ? 'selected' : '' ?>>A-</option>
                         <option value="B+" <?= ($blood_type === 'B+') ? 'selected' : '' ?>>B+</option>
@@ -104,13 +119,13 @@ include "includes/connection.php";
 
                 <div class="col-md-4">
                     <label class="form-label">Phone</label>
-                    <input type="text" name="phone" class="form-control" value="<?= isset($phone)? $phone: "" ?>">
+                    <input type="text" name="phone" class="form-control" value="<?= isset($phone)? $phone: "" ?>" required>
                 </div>
 
                 <div class="col-md-4">
                     <label class="form-label">Gender</label>
-                    <select name="gender" class="form-select" value="<?= isset($gender)? $gender: "" ?>">
-                        <option>Select...</option>
+                    <select name="gender" class="form-select" value="<?= isset($gender)? $gender: "" ?>" required>
+                        <option value="" disabled selected>Select...</option>
                         <option value="male" <?= ($gender === 'male') ? 'selected' : '' ?>>Male</option>
                         <option value="female" <?= ($gender === 'female') ? 'selected' : '' ?>>Female</option>
                     </select>
