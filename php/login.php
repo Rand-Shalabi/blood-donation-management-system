@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['role'] = $user['role'];
 
                 if ($user['role'] == 'admin') {
-                    header('Location: admin-dashboard.php');
+                    header('Location: donor-list.php');
                 } else {
                     header('Location: profile.php');
                 }
