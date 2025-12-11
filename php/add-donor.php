@@ -11,17 +11,22 @@ include "includes/header.php";
     <div class="container-add ">
         <h2>Add New Donor</h2>
      <div class="c card shadow p-5  ">
-            <form action="add_donor_action.php" method="POST" >
-
+            <form method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="add_donor">
                 <div class="row mb-4">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label class="form-label">Full Name</label>
                         <input type="text" name="full_name" class="form-control" required>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label class="form-label">Email</label>
                         <input type="email" name="email" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control mb-3" placeholder="Password" name="password" required>
                     </div>
                 </div>
 
@@ -49,7 +54,7 @@ include "includes/header.php";
 
                     <div class="col-md-4">
                         <label class="form-label">Gender</label>
-                         <select name="Gender" class="form-select" required>
+                         <select name="gender" class="form-select" required>
                             <option value="">Select...</option>
                             <option>Female</option>
                             <option>male</option>
@@ -61,7 +66,7 @@ include "includes/header.php";
 
                 <div class="mb-3">
                     <label class="form-label">Upload Donor Photo</label>
-                    <input type="file" name="donor_photo" class="form-control" required>
+                    <input type="file" name="donor_photo" class="form-control">
                 </div>
 
                 <input type="submit" class="btn btn-danger" value="Add Donor">
