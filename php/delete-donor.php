@@ -1,7 +1,20 @@
 <?php 
 $title = "BDMS - Delete Donor";
 include "includes/header.php";
- 
+include "includes/connection.php";
+
+ if (isset($_POST['delete'])) {
+    $donor_id = $_POST['donor_id'];
+
+    $query = "DELETE FROM donor WHERE donor_id = '$donor_id'";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        echo "<div class='alert alert-success'>Donor deleted successfully</div>";
+    } else {
+        echo "<div class='alert alert-danger'>Error deleting donor</div>";
+    }
+}
 ?>
 <body>
     <header>
@@ -12,7 +25,7 @@ include "includes/header.php";
      <div class="container-delete ">
     <h2>Delete Donor</h2>
 
-    <form action="delete_donor.php" method="POST" class="delete-box">
+     <form method="POST" class="delete-box">
         <label>Enter Donor ID:</label>
         <input type="number" name="donor_id" required>
  
