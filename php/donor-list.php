@@ -2,7 +2,8 @@
 $title = "BDMS - Donor List";
 include "includes/header.php";
 include "includes/connection.php";
-    
+include "functions.php"; 
+ 
     $sql = "SELECT donor_id, photo, full_name,
                    blood_type, gender, phone, 
                    email, last_donation, donations
@@ -13,28 +14,35 @@ include "includes/connection.php";
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if(isset($_GET['action']) && $_GET['action'] == 'record' && isset($_GET['donor_id'])){
+    if(isset($_GET['donor_id'])){
         $donor_id = $_GET['donor_id'];
         $date = date('Y-m-d');
-        $sql = "SELECT last_donation
+
+        $sql = "SELECT last_donation, full_name
                 FROM donor
-                WHERE donor_id = '$donor_id'";
+                WHERE donor_id = ?";
+
         $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $donor_id);
         $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
+
+        $result2 = $stmt->get_result();
+        $row = $result2->fetch_assoc();
         $last_donation = $row['last_donation'];
+        $name = $row['full_name'];
+
         if($last_donation == null || (strtotime($date) - strtotime($last_donation))/ (60 * 60 * 24) >= 56){
             $sql = "UPDATE donor
                     SET last_donation = '$date',
                         donations = donations + 1
-                    WHERE donor_id = '$donor_id'";
+                    WHERE donor_id = ?";
             $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $donor_id);
             $stmt->execute();
-            header("Location: donor-list.php?msg=Donation recorded");
+            $success = "Donation recorded Successfuly!";
         }
         else{
-            header("Location: donor-list.php?error=Too soon to donate again");
+            $error = "Too soon to donate again. It hasn't been 56 days since " .$name ." lastly donated.";
         }
     }
 ?>
@@ -49,7 +57,13 @@ include "includes/connection.php";
 
         <h2 class="  mb-4">List of Donors</h2>
 
-        
+        <?php 
+            if(isset($error)){
+                echo show_alert($error);
+            } elseif(isset($success)){
+                echo show_alert($success, "success");
+            }
+        ?>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover align-middle  table-bordered text-center ">
                     <thead class="table-dark">
@@ -77,7 +91,7 @@ include "includes/connection.php";
                                     <td><?= $value ?></td>
                             <?php } $i++;} ?>
                             <td>
-                                <a href="donor-list.php?action=record&donor_id=<?= $row['donor_id'] ?>" 
+                                <a href="donor-list.php?donor_id=<?= $row['donor_id'] ?>" 
                                    class="btn btn-success btn-sm action-btn">Donate</a>
                                 <br>
                                 <a href="edit-donor.php?donor_id=<?= $row['donor_id'] ?>" 
