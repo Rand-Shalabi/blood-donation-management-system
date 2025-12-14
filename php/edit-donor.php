@@ -33,18 +33,35 @@ include "functions.php"
         $blood_type = $_POST['blood_type'];
         $gender = $_POST['gender'];
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if(isset($_FILES['photo']) && $_FILES['photo']['name'] != ""){
+            $file_name = $_FILES['photo']['name'];
+            $file_size = $_FILES['photo']['size'];
+            $file_tmp = $_FILES['photo']['tmp_name'];
+
+            if($file_size > 2 * 1024 * 1024){
+                $error = "File is too large! Maximum allowed size is 2MB.";
+            } elseif(file_exists("../uploads/" .$file_name)){
+                $error = "There exists a file with the same name";
+            } else{
+                move_uploaded_file($file_tmp, "../uploads/" .$file_name);
+                $photo = $file_name;
+            }
+        }
+
+        if (!isset($error) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $error = "Invalid email format.";
-        } elseif (!preg_match('/^[0-9]{9,15}$/', $phone)) {
+        }
+        if (!isset($error) && !preg_match('/^[0-9]{9,15}$/', $phone)) {
             $error = "Phone must be 9-15 digits.";
-        } else{
+        } 
+        if(!isset($error)){
             $conn->begin_transaction();
             $sql1 = "UPDATE donor
-                     SET full_name = ?, blood_type = ?, phone = ?, gender = ?
+                     SET full_name = ?, blood_type = ?, phone = ?, gender = ?, photo = ?
                      WHERE donor_id = ?";
 
             $stmt1 = $conn->prepare($sql1);
-            $stmt1->bind_param("ssssi", $name, $blood_type, $phone, $gender, $donor_id);
+            $stmt1->bind_param("sssssi", $name, $blood_type, $phone, $gender, $photo, $donor_id);
             $stmt1->execute();
 
             $sql2 = "UPDATE user
@@ -134,7 +151,7 @@ include "functions.php"
 
             <div class="mb-3">
                 <label class="form-label">Upload New Photo (optional)</label>
-                <input type="file" name="photo" class="form-control" value="<?= isset($photo)? $photo: "" ?>">
+                <input type="file" name="photo" class="form-control" accept = ".png, .jpg, .jpeg">
             </div>
 
               <input type="submit" name="update" value="Save changes" class=" btn   btn-danger ">
