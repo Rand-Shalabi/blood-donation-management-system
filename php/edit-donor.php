@@ -1,4 +1,11 @@
-<?php 
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    header("Location: login.php");
+    exit();
+}
+
 $title = "BDMS - Update Donor Info";
 include "includes/header.php";
 include "includes/connection.php";

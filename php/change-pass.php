@@ -1,4 +1,9 @@
 <?php 
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    header("Location: login.php");
+    exit();
+}
+
 $title = "BDMS - Reset Password";
 include "includes/header.php";
 include "includes/connection.php";
