@@ -1,13 +1,16 @@
 <?php 
+session_start();
+
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
+    header("Location: login.php");
+    exit();
+}
+    $email = $_SESSION['email']; 
     $title = "BDMS - Donor Profile";
     include "includes/header.php";
-
     include "includes/connection.php";
     
-    $email="kareem@example.com";
-
     if (isset($_FILES['photo']) && $_FILES['photo']['name'] != "") {
-
     $file_name = $_FILES['photo']['name'];
     $file_size = $_FILES['photo']['size'];
     $file_tmp  = $_FILES['photo']['tmp_name'];
@@ -30,6 +33,7 @@
         $stmt2->execute();
          }
 }
+
  $sql = "SELECT donor.*, user.created_at
         FROM donor 
         JOIN user ON donor.donor_id = user.id 
@@ -39,40 +43,28 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $email);
 $stmt->execute();
 $result = $stmt->get_result();
+////////////
 
-if ($row = $result->fetch_assoc()) {
+ if ($row = $result->fetch_assoc()) {
+    $name = $row['full_name'];
     $photo = $row['photo'];
-    $name  = $row['full_name'];
-}
+    $phone = $row['phone'];
+    $blood_type = $row['blood_type'];
+    $last_donation = $row['last_donation'];
+    $donations = $row['donations'];
+    $gender = $row['gender'];
+    $created_at = $row['created_at'];
+ }
 if (!empty($photo)) {
     $profilePhoto = "../uploads/" . $photo;
 } else {
     $profilePhoto = "../assets/blank_profile.webp";
 }
 
-
-    /**$email = $_POST["email"];**/
      
-    $sql = "SELECT donor.*, user.created_at
-            FROM donor join user
-            ON donor.donor_id = user.id 
-            WHERE email = '$email'";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if($row = $result->fetch_assoc()){
-        $name = $row['full_name'];
-        $photo = $row['photo'];
-        $phone = $row['phone'];
-        $blood_type = $row['blood_type'];
-        $last_donation = $row['last_donation'];
-        $donations = $row['donations'];
-        $gender = $row['gender'];
-        $created_at = $row['created_at'];
-    }
-    $formatted_phone = substr($phone, 0, 3) . "-" . substr($phone, 3, 3) . "-" . substr($phone, 6);
+    $formatted_phone = substr($phone, 0, 3) . "-" .
+                       substr($phone, 3, 3) . "-" . 
+                       substr($phone, 6);
  
  
 ?>
