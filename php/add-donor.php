@@ -1,4 +1,5 @@
 <?php 
+include "new-donor-handler.php";
 $title = "BDMS - Add Donor";
 include "includes/header.php";
 ?>
@@ -10,18 +11,26 @@ include "includes/header.php";
 <div class="content">
     <div class="container-add ">
         <h2>Add New Donor</h2>
+        <?php 
+            if(isset($error)){
+                echo show_alert($error);
+            } elseif(isset($success)){
+                header("refresh:2;url=donor-list.php");
+                echo show_alert($success, "success");
+            }
+        ?>
      <div class="c card shadow p-5  ">
             <form method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="action" value="add_donor">
+                <input type="hidden" name="action" value="<?= isset($donor_id)? $donor_id: "" ?>">
                 <div class="row mb-4">
                     <div class="col-md-4">
                         <label class="form-label">Full Name</label>
-                        <input type="text" name="full_name" class="form-control" required>
+                        <input type="text" name="full_name" class="form-control" value="<?= isset($full_name)? $full_name: "" ?>" required>
                     </div>
 
                     <div class="col-md-4">
                         <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" required>
+                        <input type="email" name="email" class="form-control" value="<?= isset($email)? $email : ""?>" required>
                     </div>
 
                     <div class="col-md-4">
@@ -34,39 +43,33 @@ include "includes/header.php";
                 <div class="row mb-4">
                     <div class="col-md-4">
                         <label class="form-label">Blood Type</label>
-                        <select name="blood_type" class="form-select" required>
-                            <option value="">Select...</option>
-                            <option>A+</option>
-                            <option>A-</option>
-                            <option>B+</option>
-                            <option>B-</option>
-                            <option>O+</option>
-                            <option>O-</option>
-                            <option>AB+</option>
-                            <option>AB-</option>
-                        </select>
+                    <select name="blood_type" class="form-select" required>
+                        <option value="" disabled selected>Select...</option>
+                        <option value="A+" <?= ($blood_type === 'A+') ? 'selected' : '' ?>>A+</option>
+                        <option value="A-" <?= ($blood_type === 'A-') ? 'selected' : '' ?>>A-</option>
+                        <option value="B+" <?= ($blood_type === 'B+') ? 'selected' : '' ?>>B+</option>
+                        <option value="B-" <?= ($blood_type === 'B-') ? 'selected' : '' ?>>B-</option>
+                        <option value="O+" <?= ($blood_type === 'O+') ? 'selected' : '' ?>>O+</option>
+                        <option value="O-" <?= ($blood_type === 'O-') ? 'selected' : '' ?>>O-</option>
+                        <option value="AB+" <?= ($blood_type === 'AB+') ? 'selected' : '' ?>>AB+</option>
+                        <option value="AB-" <?= ($blood_type === 'AB-') ? 'selected' : '' ?>>AB-</option>
+                    </select>
                     </div>
 
                     <div class="col-md-4">
                         <label class="form-label">Phone Number</label>
-                        <input type="text" name="phone" class="form-control" required>
+                        <input type="text" name="phone" class="form-control" value="<?= isset($phone)? $phone: "" ?>" required>
                     </div>
 
                     <div class="col-md-4">
                         <label class="form-label">Gender</label>
-                         <select name="gender" class="form-select" required>
-                            <option value="">Select...</option>
-                            <option>Female</option>
-                            <option>male</option>
-                             
+                        <select name="gender" class="form-select" value="<?= isset($gender)? $gender: "" ?>" required>
+                            <option value="" disabled selected>Select...</option>
+                            <option value="male" <?= ($gender === 'male') ? 'selected' : '' ?>>Male</option>
+                            <option value="female" <?= ($gender === 'female') ? 'selected' : '' ?>>Female</option>
                         </select>
                     </div>
                      
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Upload Donor Photo</label>
-                    <input type="file" name="donor_photo" class="form-control">
                 </div>
 
                 <input type="submit" class="btn btn-danger" value="Add Donor">
