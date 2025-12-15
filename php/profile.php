@@ -43,7 +43,7 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $email);
 $stmt->execute();
 $result = $stmt->get_result();
-////////////
+ 
 
  if ($row = $result->fetch_assoc()) {
     $name = $row['full_name'];
