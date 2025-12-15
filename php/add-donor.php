@@ -29,6 +29,10 @@ include "includes/header.php";
      <div class="c card shadow p-5  ">
             <form method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="action" value="<?= isset($donor_id)? $donor_id: "" ?>">
+                <?php 
+                    $gender = $gender ?? '';
+                    $blood_type = $blood_type ?? '';
+                ?>                
                 <div class="row mb-4">
                     <div class="col-md-4">
                         <label class="form-label">Full Name</label>

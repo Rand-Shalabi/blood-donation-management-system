@@ -112,6 +112,10 @@ include "functions.php";
         <form method="POST" enctype="multipart/form-data">
 
             <input type="hidden" name="donor_id" value="<?= isset($donor_id)? $donor_id: "" ?>">
+            <?php 
+                $gender = $gender ?? '';
+                $blood_type = $blood_type ?? '';
+            ?>
 
             <div class="row mb-4">
                 <div class="col-md-6">

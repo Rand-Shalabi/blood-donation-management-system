@@ -40,7 +40,10 @@ include "includes/header.php";
                     <form method="post" action="signup.php">
                          <input type="text" class="form-control mb-3" placeholder="Full Name" name="full_name"  style="height: 30px;"   value="<?= isset($full_name)? $full_name: "" ?>">
                         <input type="email" class="form-control mb-3" placeholder=" Email" name="email" style="height: 30px;"    value="<?= isset($email)? $email : ""?>">
-              
+                <?php 
+                    $gender = $gender ?? '';
+                    $blood_type = $blood_type ?? '';
+                ?>                
                  <!--gender -->
              <div class="mb-3 mt-3 ">
                      <label for="gender">Gender</label><br>
