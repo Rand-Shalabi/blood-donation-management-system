@@ -3,7 +3,56 @@
     include "includes/header.php";
 
     include "includes/connection.php";
-    $email = $_POST["email"];
+    
+    $email="kareem@example.com";
+
+    if (isset($_FILES['photo']) && $_FILES['photo']['name'] != "") {
+
+    $file_name = $_FILES['photo']['name'];
+    $file_size = $_FILES['photo']['size'];
+    $file_tmp  = $_FILES['photo']['tmp_name'];
+
+
+    if ($file_size <= 2097152) {
+
+        $new_name = "donor_" . time();
+        $path = "../uploads/" . $new_name;    
+
+        move_uploaded_file($file_tmp, $path);
+
+        $update = "UPDATE donor 
+                   JOIN user ON donor.donor_id = user.id
+                   SET donor.photo = ?
+                   WHERE user.email = ?";
+
+        $stmt2 = $conn->prepare($update);
+        $stmt2->bind_param("ss", $new_name, $email);
+        $stmt2->execute();
+         }
+}
+ $sql = "SELECT donor.*, user.created_at
+        FROM donor 
+        JOIN user ON donor.donor_id = user.id 
+        WHERE user.email = ?";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($row = $result->fetch_assoc()) {
+    $photo = $row['photo'];
+    $name  = $row['full_name'];
+}
+if (!empty($photo)) {
+    $profilePhoto = "../uploads/" . $photo;
+} else {
+    $profilePhoto = "../assets/blank_profile.webp";
+}
+
+
+    /**$email = $_POST["email"];**/
+     
     $sql = "SELECT donor.*, user.created_at
             FROM donor join user
             ON donor.donor_id = user.id 
@@ -24,15 +73,32 @@
         $created_at = $row['created_at'];
     }
     $formatted_phone = substr($phone, 0, 3) . "-" . substr($phone, 3, 3) . "-" . substr($phone, 6);
+ 
+ 
 ?>
 <body>
     <div class="profile-container">
         <div class="profile-card text-center p-4">
             <div class="row">
-                <div class="col-12">
-                    <img class="profile" src= "<?= "../uploads/" . $photo ?>" alt="">
-                </div>
-                <div class="col-12">
+
+
+                 <div class="col-12 d-flex justify-content-center">
+                    <form method="POST" enctype="multipart/form-data">
+    <div class="profile-img-wrapper">
+        <img src="<?= $profilePhoto ?>" class="profile-img">
+
+        <label for="uploadPhoto" class="camera-icon">
+            <i class="bi bi-camera-fill"></i>
+        </label>
+
+        <input type="file" id="uploadPhoto" name="photo" accept=".png, .jpg, .jpeg, .webp" onchange="this.form.submit()">
+    </div>
+</form>
+  
+
+</div>
+
+<div class="col-12">
                     <h2 class="profile-title"><?= $name?></h2>
                 </div>
             </div>
