@@ -124,6 +124,12 @@ if (!empty($photo)) {
                     <div><?= $created_at?></div>
                 </div>
             </div>
+            
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <a href="logout.php" class="btn btn-danger">Logout</a>
+                </div>
+            </div>
         </div>
     </div>
 </body>
