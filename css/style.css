@@ -19,12 +19,7 @@ body {
   margin: auto;
 }
 
-img.profile {
-    min-height: 10vh;
-    width: 25%;
-    margin: 2%;
-    border-radius: 20px;
-}
+ 
 
 .profile-info {
     border: solid grey 2px;
@@ -38,4 +33,56 @@ img.profile {
     border-color: black;
     color: crimson;
     transform: scale(1.01);
+}
+
+
+
+.profile-img-wrapper {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;    
+    background-color: #eee;
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   
+    border-radius: 20px;
+}
+
+ 
+#uploadPhoto {
+    display: none;
+}
+
+ 
+.camera-icon {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 36px;
+    height: 36px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+.camera-icon i {
+    font-size: 16px;
+    color: #333;
+}
+
+.camera-icon:hover {
+    background-color: crimson;
+}
+
+.camera-icon:hover i {
+    color: white;
 }
