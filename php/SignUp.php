@@ -74,7 +74,7 @@ include "includes/header.php";
                               
                  </div>
                         <!--Mobile number -->
-                        <input type="text" class="form-control mb-3" placeholder="Mobile number" name="phone" style="height: 30px;" value="<?= isset($phone) $phone: "" ?>">
+                        <input type="text" class="form-control mb-3" placeholder="Mobile number" name="phone" style="height: 30px;" value="<?= isset($phone)? $phone: "" ?>">
                          <!--Password -->
                         <input type="password" class="form-control mb-3" placeholder="Password" name="password" style="height: 30px;">
                         

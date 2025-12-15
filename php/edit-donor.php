@@ -2,7 +2,7 @@
 $title = "BDMS - Update Donor Info";
 include "includes/header.php";
 include "includes/connection.php";
-include "functions.php"
+include "functions.php";
     if(isset($_GET['donor_id'])){
         $donor_id = (int)$_GET['donor_id'];
         $sql = "SELECT donor.*, user.email
