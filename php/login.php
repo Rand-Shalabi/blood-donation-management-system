@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                        <!-- Form -->
                     <form action="login.php" method="post">
-                        <input type="email" name="email" class="form-control mb-3" placeholder="Enter email here">
+                        <input type="email" name="email" class="form-control mb-3" placeholder="Enter email here" value="<?= isset($email)? $email: "" ?>">
                         <input type="password" name="password" class="form-control mb-3" placeholder="Enter password here">
                           <button type="submit" class="btn btn-danger w-100 mb-3">Login</button>
 

@@ -36,21 +36,22 @@ include "includes/header.php";
         ?>
                
 
-            <!-- Form -->
+<!-- Form -->
                     <form method="post" action="signup.php">
-                        <input type="hidden" name="action" value="create_account">
-                         <input type="text" class="form-control mb-3" placeholder="Full Name" name="full_name"  style="height: 30px;">
-                        <input type="email" class="form-control mb-3" placeholder=" Email" name="email" style="height: 30px;">
+                         <input type="text" class="form-control mb-3" placeholder="Full Name" name="full_name"  style="height: 30px;"   value="<?= isset($full_name)? $full_name: "" ?>">
+                        <input type="email" class="form-control mb-3" placeholder=" Email" name="email" style="height: 30px;"    value="<?= isset($email)? $email : ""?>">
               
                  <!--gender -->
              <div class="mb-3 mt-3 ">
                      <label for="gender">Gender</label><br>
                  <div>
                      
-                      <input type="radio" name="gender" id="male" value="male">
+                      <input type="radio" name="gender" id="male" required value="male"
+       <?= ($gender === 'male') ? 'checked' : '' ?>>
                       <label for="male">Male</label>
                     
-                       <input type="radio" name="gender" id="female"  value="female" >
+                       <input type="radio" name="gender" id="female" required  value="female"
+       <?= ($gender === 'female') ? 'checked' : '' ?>>
                          <label for="female">Female</label>
                  </div>  
                     <div id="gender-error-message" class="text-danger"></div>  
@@ -59,21 +60,21 @@ include "includes/header.php";
                  <div class="contain mt-3 mb-3" >
                 <label class="form-label">Blood Type</label>
 
-                                    <select class="form-select" name="blood_type" style="height: 35px;">
-                                        <option selected disabled>Select Blood Type</option>
-                                        <option value="A+">A+</option>
-                                        <option value="A-">A-</option>
-                                        <option value="B+">B+</option>
-                                        <option value="B-">B-</option>
-                                         <option value="AB-">AB-</option>
-                                          <option value="AB+">AB+</option>
-                                        <option value="O+">O+</option>
-                                     <option value="O-">O-</option>
-                                    </select>
+                    <select name="blood_type" class="form-select" required>
+                        <option value="" disabled selected>Select...</option>
+                        <option value="A+" <?= ($blood_type === 'A+') ? 'selected' : '' ?>>A+</option>
+                        <option value="A-" <?= ($blood_type === 'A-') ? 'selected' : '' ?>>A-</option>
+                        <option value="B+" <?= ($blood_type === 'B+') ? 'selected' : '' ?>>B+</option>
+                        <option value="B-" <?= ($blood_type === 'B-') ? 'selected' : '' ?>>B-</option>
+                        <option value="O+" <?= ($blood_type === 'O+') ? 'selected' : '' ?>>O+</option>
+                        <option value="O-" <?= ($blood_type === 'O-') ? 'selected' : '' ?>>O-</option>
+                        <option value="AB+" <?= ($blood_type === 'AB+') ? 'selected' : '' ?>>AB+</option>
+                        <option value="AB-" <?= ($blood_type === 'AB-') ? 'selected' : '' ?>>AB-</option>
+                    </select>
                               
                  </div>
                         <!--Mobile number -->
-                        <input type="text" class="form-control mb-3" placeholder="Mobile number" name="phone" style="height: 30px;">
+                        <input type="text" class="form-control mb-3" placeholder="Mobile number" name="phone" style="height: 30px;" value="<?= isset($phone) $phone: "" ?>">
                          <!--Password -->
                         <input type="password" class="form-control mb-3" placeholder="Password" name="password" style="height: 30px;">
                         
