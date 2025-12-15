@@ -38,6 +38,7 @@ include "includes/header.php";
 
 <!-- Form -->
                     <form method="post" action="signup.php">
+                         <input type="hidden" name="action" value="create_account">
                          <input type="text" class="form-control mb-3" placeholder="Full Name" name="full_name"  style="height: 30px;"   value="<?= isset($full_name)? $full_name: "" ?>">
                         <input type="email" class="form-control mb-3" placeholder=" Email" name="email" style="height: 30px;"    value="<?= isset($email)? $email : ""?>">
                 <?php 

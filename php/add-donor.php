@@ -19,15 +19,12 @@ include "includes/header.php";
     <div class="container-add ">
         <h2>Add New Donor</h2>
         <?php 
-            if(isset($error)){
-                echo show_alert($error);
-            } elseif(isset($success)){
-                header("refresh:2;url=donor-list.php");
-                echo show_alert($success, "success");
-            }
+            show_alert($error, 'danger');
+            show_alert($success, 'success');
         ?>
      <div class="c card shadow p-5  ">
             <form method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="add_donor">
                 <input type="hidden" name="action" value="<?= isset($donor_id)? $donor_id: "" ?>">
                 <?php 
                     $gender = $gender ?? '';

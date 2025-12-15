@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $success = "Account created successfully!";
                     if ($_POST['action'] === 'create_account') {
                         header("refresh:2;url=profile.php");
-                    } else if ($_POST['action'] === 'add_donor') {
+                    } elseif ($_POST['action'] === 'add_donor') {
                         header("refresh:2;url=donor-list.php");
                     }
                 } else {
