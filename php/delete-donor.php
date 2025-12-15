@@ -10,23 +10,45 @@ $title = "BDMS - Delete Donor";
 include "includes/header.php";
 include "includes/connection.php";
 include "functions.php";
- if(isset($_GET['donor_id'])){
-        $donor = (int)$_GET['donor_id'];
- }
- if (isset($_POST['delete'])) {
-    $donor_id = (int)$_POST['donor_id'];
 
-    $check = "SELECT donor_id FROM donor WHERE donor_id = $donor_id";
-    $check_result = mysqli_query($conn, $check);
-    if(mysqli_num_rows($check_result) == 0){
-       $error = "Donor ID not found.";
-    } else{
-        $query = "DELETE FROM donor WHERE donor_id = $donor_id";
-        $result = mysqli_query($conn, $query);
-        $success ="Donor Deleted Successfully!";
+  if (isset($_GET['donor_id'])) {
+    $donor = (int) $_GET['donor_id'];
+}
+
+ 
+if (isset($_POST['delete'])) {
+
+    $donor_id = (int) $_POST['donor_id'];
+
+     
+    $check = "SELECT donor_id FROM donor WHERE donor_id = ?";
+    $stmt = $conn->prepare($check);
+    $stmt->bind_param("i", $donor_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 0) {
+        $error = "Donor ID not found.";
+    } else {
+
         
-    }
+        if (!isset($error)) {
+        $conn->begin_transaction();
+            
+                $sql1 = "DELETE FROM donor WHERE donor_id = ?";
+                $stmt1 = $conn->prepare($sql1);
+                $stmt1->bind_param("i", $donor_id);
+                $stmt1->execute();
 
+                $sql2 = "DELETE FROM user WHERE id = ?";
+                $stmt2 = $conn->prepare($sql2);
+                $stmt2->bind_param("i", $donor_id);
+                $stmt2->execute();
+
+                $conn->commit();
+                $success = "Donor deleted successfully!";
+           }
+    }
 }
 ?>
 <body>
